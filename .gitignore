@@ -1,29 +1,26 @@
+# Node
+node_modules/
+dist/
+.vite/
+
+# Tauri / Rust
+src-tauri/target/
+*.rs.bk
+*.rlib
+*.rmeta
+*.lib
+
+# OS
+.DS_Store
+Thumbs.db
+
 # Logs
-logs
-*.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Models
+*.gguf
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Native binaries (user builds locally)
-bin/*.exe
-bin/*.dll
-
+# Built apps
+*.exe
+*.msi
