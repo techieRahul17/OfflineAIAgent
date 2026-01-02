@@ -1,0 +1,10 @@
+E:\projects\offline-edu-ai-agent\src-tauri\target\release\deps\webview2_com-36166343abf8b1b8.d: C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\lib.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\callback.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\options.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\pwstr.rs
+
+E:\projects\offline-edu-ai-agent\src-tauri\target\release\deps\libwebview2_com-36166343abf8b1b8.rlib: C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\lib.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\callback.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\options.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\pwstr.rs
+
+E:\projects\offline-edu-ai-agent\src-tauri\target\release\deps\libwebview2_com-36166343abf8b1b8.rmeta: C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\lib.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\callback.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\options.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\pwstr.rs
+
+C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\lib.rs:
+C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\callback.rs:
+C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\options.rs:
+C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webview2-com-0.38.0\src\pwstr.rs:

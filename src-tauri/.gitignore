@@ -1,0 +1,23 @@
+# Node
+node_modules/
+dist/
+.vite/
+
+# Tauri / Rust
+src-tauri/target/
+*.rs.bk
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+
+# Models (DO NOT COMMIT)
+*.gguf
+
+# Built apps
+*.exe
+*.msi

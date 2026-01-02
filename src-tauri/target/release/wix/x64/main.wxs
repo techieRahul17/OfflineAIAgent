@@ -1,0 +1,218 @@
+<?if $(sys.BUILDARCH)="x86"?>
+    <?define Win64 = "no" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+<?elseif $(sys.BUILDARCH)="x64"?>
+    <?define Win64 = "yes" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+<?elseif $(sys.BUILDARCH)="arm64"?>
+    <?define Win64 = "yes" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+<?else?>
+    <?error Unsupported value of sys.BUILDARCH=$(sys.BUILDARCH)?>
+<?endif?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product
+            Id="*"
+            Name="offline-edu-ai-agent"
+            UpgradeCode="ad032c07-4544-53a7-9cc1-6d6496343c97"
+            Language="!(loc.TauriLanguage)"
+            Manufacturer="edu"
+            Version="0.1.0">
+
+        <Package Id="*"
+                 Keywords="Installer"
+                 InstallerVersion="450"
+                 Languages="0"
+                 Compressed="yes"
+                 InstallScope="perMachine"
+                 SummaryCodepage="!(loc.TauriCodepage)"/>
+
+        <!-- https://docs.microsoft.com/en-us/windows/win32/msi/reinstallmode -->
+        <!-- reinstall all files; rewrite all registry entries; reinstall all shortcuts -->
+        <Property Id="REINSTALLMODE" Value="amus" />
+
+        <!-- Auto launch app after installation, useful for passive mode which usually used in updates -->
+        <Property Id="AUTOLAUNCHAPP" Secure="yes" />
+        <!-- Property to forward cli args to the launched app to not lose those of the pre-update instance -->
+        <Property Id="LAUNCHAPPARGS" Secure="yes" />
+
+            <MajorUpgrade Schedule="afterInstallInitialize" AllowDowngrades="yes" />
+
+        <InstallExecuteSequence>
+            <RemoveShortcuts>Installed AND NOT UPGRADINGPRODUCTCODE</RemoveShortcuts>
+        </InstallExecuteSequence>
+
+        <Media Id="1" Cabinet="app.cab" EmbedCab="yes" />
+
+
+        <Icon Id="ProductIcon" SourceFile="E:\projects\offline-edu-ai-agent\src-tauri\target\release\resources\icon.ico"/>
+        <Property Id="ARPPRODUCTICON" Value="ProductIcon" />
+        <Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />      <!-- Remove repair -->
+        <SetProperty Id="ARPNOMODIFY" Value="1" After="InstallValidate" Sequence="execute"/>
+
+
+        <Property Id="INSTALLDIR">
+          <!-- First attempt: Search for "InstallDir" -->
+          <RegistrySearch Id="PrevInstallDirWithName" Root="HKCU" Key="Software\edu\offline-edu-ai-agent" Name="InstallDir" Type="raw" />
+
+          <!-- Second attempt: If the first fails, search for the default key value (this is how the nsis installer currently stores the path) -->
+          <RegistrySearch Id="PrevInstallDirNoName" Root="HKCU" Key="Software\edu\offline-edu-ai-agent" Type="raw" />
+        </Property>
+
+        <!-- launch app checkbox -->
+        <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.LaunchApp)" />
+        <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1"/>
+        <CustomAction Id="LaunchApplication" Impersonate="yes" FileKey="Path" ExeCommand="[LAUNCHAPPARGS]" Return="asyncNoWait" />
+
+        <UI>
+            <!-- launch app checkbox -->
+            <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+
+            <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+
+            <!-- Skip license dialog -->
+            <Publish Dialog="WelcomeDlg"
+                     Control="Next"
+                     Event="NewDialog"
+                     Value="InstallDirDlg"
+                     Order="2">1</Publish>
+            <Publish Dialog="InstallDirDlg"
+                     Control="Back"
+                     Event="NewDialog"
+                     Value="WelcomeDlg"
+                     Order="2">1</Publish>
+        </UI>
+
+        <UIRef Id="WixUI_InstallDir" />
+
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="DesktopFolder" Name="Desktop">
+                <Component Id="ApplicationShortcutDesktop" Guid="*">
+                    <Shortcut Id="ApplicationDesktopShortcut" Name="offline-edu-ai-agent" Description="Runs offline-edu-ai-agent" Target="[!Path]" WorkingDirectory="INSTALLDIR" />
+                    <RemoveFolder Id="DesktopFolder" On="uninstall" />
+                    <RegistryValue Root="HKCU" Key="Software\edu\offline-edu-ai-agent" Name="Desktop Shortcut" Type="integer" Value="1" KeyPath="yes" />
+                </Component>
+            </Directory>
+            <Directory Id="$(var.PlatformProgramFilesFolder)" Name="PFiles">
+                <Directory Id="INSTALLDIR" Name="offline-edu-ai-agent"/>
+            </Directory>
+            <Directory Id="ProgramMenuFolder">
+                <Directory Id="ApplicationProgramsFolder" Name="offline-edu-ai-agent"/>
+            </Directory>
+        </Directory>
+
+        <DirectoryRef Id="INSTALLDIR">
+            <Component Id="RegistryEntries" Guid="*">
+                <RegistryKey Root="HKCU" Key="Software\edu\offline-edu-ai-agent">
+                    <RegistryValue Name="InstallDir" Type="string" Value="[INSTALLDIR]" KeyPath="yes" />
+                </RegistryKey>
+                <!-- Change the Root to HKCU for perUser installations -->
+</Component>
+            <Component Id="Path" Guid="aa365458-54f1-5a6e-b4fd-a2415b415175" Win64="$(var.Win64)">
+                <File Id="Path" Source="E:\projects\offline-edu-ai-agent\src-tauri\target\release\offline-edu-ai-agent.exe" KeyPath="yes" Checksum="yes"/>
+</Component>
+            <Directory Id="I5f9e355de0a0481bb69f3b5b4ed1e948" Name="agent"><Directory Id="Ic17c111c279743a989909f390ecbf5de" Name="models"><Component Id="Ic3b440371c284d81b38121ac299343da" Guid="c154780a-7a19-40b9-b52e-45d8e21afa7a" Win64="$(var.Win64)" KeyPath="yes"><File Id="PathFile_Ic3b440371c284d81b38121ac299343da" Source="E:\projects\offline-edu-ai-agent\src-tauri\agent\models\tinyllama-1.1b-chat.Q4_K_M.gguf" /></Component></Directory></Directory><Directory Id="I186105f93058418592d5daa59af3f20a" Name="bin"><Component Id="Iea24e7b6b793469c843a936b0e0034d5" Guid="cf196df6-2f97-4925-87ef-1d874d739b15" Win64="$(var.Win64)" KeyPath="yes"><File Id="PathFile_Iea24e7b6b793469c843a936b0e0034d5" Source="E:\projects\offline-edu-ai-agent\src-tauri\bin\llama-cli.exe" /></Component><Component Id="Ia4f6a09230554a53a6c9b6a314a7f6b1" Guid="43c99378-73ba-4ff2-8f79-9d69df43eec5" Win64="$(var.Win64)" KeyPath="yes"><File Id="PathFile_Ia4f6a09230554a53a6c9b6a314a7f6b1" Source="E:\projects\offline-edu-ai-agent\src-tauri\bin\llama.dll" /></Component><Component Id="I561deba8f6124a7880d87eae21577e68" Guid="91c4866e-3d5f-43e3-b4e2-76e98f83efea" Win64="$(var.Win64)" KeyPath="yes"><File Id="PathFile_I561deba8f6124a7880d87eae21577e68" Source="E:\projects\offline-edu-ai-agent\src-tauri\bin\ggml.dll" /></Component><Component Id="If3ba577b2c504c309dc0cfe9b950259a" Guid="2178008a-0ef5-489a-89c4-d1de882a234e" Win64="$(var.Win64)" KeyPath="yes"><File Id="PathFile_If3ba577b2c504c309dc0cfe9b950259a" Source="E:\projects\offline-edu-ai-agent\src-tauri\bin\ggml-cpu.dll" /></Component><Component Id="Id3e9468ff83f4d8a8782eb3c8157be58" Guid="d32eb3a9-8b43-43a8-8a1d-34a9e2582cdd" Win64="$(var.Win64)" KeyPath="yes"><File Id="PathFile_Id3e9468ff83f4d8a8782eb3c8157be58" Source="E:\projects\offline-edu-ai-agent\src-tauri\bin\ggml-base.dll" /></Component><Component Id="Ib7bce800b98c45319086430e7029ab67" Guid="e244aedc-849e-4052-9201-cbcb6e6d8d94" Win64="$(var.Win64)" KeyPath="yes"><File Id="PathFile_Ib7bce800b98c45319086430e7029ab67" Source="E:\projects\offline-edu-ai-agent\src-tauri\bin\mtmd.dll" /></Component></Directory>
+            <Component Id="CMP_UninstallShortcut" Guid="*">
+
+                <Shortcut Id="UninstallShortcut"
+						  Name="Uninstall offline-edu-ai-agent"
+						  Description="Uninstalls offline-edu-ai-agent"
+						  Target="[System64Folder]msiexec.exe"
+						  Arguments="/x [ProductCode]" />
+
+				<RemoveFolder Id="INSTALLDIR"
+							  On="uninstall" />
+
+				<RegistryValue Root="HKCU"
+							   Key="Software\edu\offline-edu-ai-agent"
+							   Name="Uninstaller Shortcut"
+							   Type="integer"
+							   Value="1"
+							   KeyPath="yes" />
+            </Component>
+        </DirectoryRef>
+
+        <DirectoryRef Id="ApplicationProgramsFolder">
+            <Component Id="ApplicationShortcut" Guid="*">
+                <Shortcut Id="ApplicationStartMenuShortcut"
+                    Name="offline-edu-ai-agent"
+                    Description="Runs offline-edu-ai-agent"
+                    Target="[!Path]"
+                    Icon="ProductIcon"
+                    WorkingDirectory="INSTALLDIR">
+                    <ShortcutProperty Key="System.AppUserModel.ID" Value="com.edu.offlineaiagent"/>
+                </Shortcut>
+                <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="Software\edu\offline-edu-ai-agent" Name="Start Menu Shortcut" Type="integer" Value="1" KeyPath="yes"/>
+           </Component>
+        </DirectoryRef>
+
+<Feature
+                Id="MainProgram"
+                Title="Application"
+                Description="!(loc.InstallAppFeature)"
+                Level="1"
+                ConfigurableDirectory="INSTALLDIR"
+                AllowAdvertise="no"
+                Display="expand"
+                Absent="disallow">
+
+            <ComponentRef Id="RegistryEntries"/>
+
+<ComponentRef Id="Ic3b440371c284d81b38121ac299343da"/>
+<ComponentRef Id="Iea24e7b6b793469c843a936b0e0034d5"/>
+<ComponentRef Id="Ia4f6a09230554a53a6c9b6a314a7f6b1"/>
+<ComponentRef Id="I561deba8f6124a7880d87eae21577e68"/>
+<ComponentRef Id="If3ba577b2c504c309dc0cfe9b950259a"/>
+<ComponentRef Id="Id3e9468ff83f4d8a8782eb3c8157be58"/>
+<ComponentRef Id="Ib7bce800b98c45319086430e7029ab67"/>
+
+            <Feature Id="ShortcutsFeature"
+                Title="Shortcuts"
+                Level="1">
+                <ComponentRef Id="Path"/>
+                <ComponentRef Id="CMP_UninstallShortcut" />
+                <ComponentRef Id="ApplicationShortcut" />
+                <ComponentRef Id="ApplicationShortcutDesktop" />
+            </Feature>
+
+            <Feature
+                Id="Environment"
+                Title="PATH Environment Variable"
+                Description="!(loc.PathEnvVarFeature)"
+                Level="1"
+                Absent="allow">
+            <ComponentRef Id="Path"/>
+</Feature>
+        </Feature>
+
+        <Feature Id="External" AllowAdvertise="no" Absent="disallow">
+</Feature>
+
+        <!-- WebView2 -->
+        <Property Id="WVRTINSTALLED">
+            <RegistrySearch Id="WVRTInstalledSystem" Root="HKLM" Key="SOFTWARE\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}" Name="pv" Type="raw" Win64="no" />
+            <RegistrySearch Id="WVRTInstalledUser" Root="HKCU" Key="SOFTWARE\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}" Name="pv" Type="raw"/>
+        </Property>
+
+        <CustomAction Id='DownloadAndInvokeBootstrapper' Directory="INSTALLDIR" Execute="deferred" ExeCommand='powershell.exe -NoProfile -windowstyle hidden try [\{] [\[]Net.ServicePointManager[\]]::SecurityProtocol = [\[]Net.SecurityProtocolType[\]]::Tls12 [\}] catch [\{][\}]; Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/p/?LinkId=2124703" -OutFile "$env:TEMP\MicrosoftEdgeWebview2Setup.exe" ; Start-Process -FilePath "$env:TEMP\MicrosoftEdgeWebview2Setup.exe" -ArgumentList (&apos;/silent&apos;, &apos;/install&apos;) -Wait' Return='check'/>
+        <InstallExecuteSequence>
+            <Custom Action='DownloadAndInvokeBootstrapper' Before='InstallFinalize'>
+                <![CDATA[NOT(REMOVE OR WVRTINSTALLED)]]>
+            </Custom>
+        </InstallExecuteSequence>
+
+        <!-- Embedded webview bootstrapper mode -->
+
+        <!-- Embedded offline installer -->
+
+
+
+        <InstallExecuteSequence>
+          <Custom Action="LaunchApplication" After="InstallFinalize">AUTOLAUNCHAPP AND NOT Installed</Custom>
+        </InstallExecuteSequence>
+
+        <SetProperty Id="ARPINSTALLLOCATION" Value="[INSTALLDIR]" After="CostFinalize"/>
+    </Product>
+</Wix>

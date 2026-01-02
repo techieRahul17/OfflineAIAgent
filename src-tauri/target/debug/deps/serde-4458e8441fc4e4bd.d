@@ -1,0 +1,14 @@
+E:\projects\offline-edu-ai-agent\src-tauri\target\debug\deps\serde-4458e8441fc4e4bd.d: C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs E:\projects\offline-edu-ai-agent\src-tauri\target\debug\build\serde-a75bef8c6c9d2ef7\out/private.rs
+
+E:\projects\offline-edu-ai-agent\src-tauri\target\debug\deps\libserde-4458e8441fc4e4bd.rlib: C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs E:\projects\offline-edu-ai-agent\src-tauri\target\debug\build\serde-a75bef8c6c9d2ef7\out/private.rs
+
+E:\projects\offline-edu-ai-agent\src-tauri\target\debug\deps\libserde-4458e8441fc4e4bd.rmeta: C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs E:\projects\offline-edu-ai-agent\src-tauri\target\debug\build\serde-a75bef8c6c9d2ef7\out/private.rs
+
+C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs:
+C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs:
+C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs:
+C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs:
+C:\Users\Rahul\ V\ S\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs:
+E:\projects\offline-edu-ai-agent\src-tauri\target\debug\build\serde-a75bef8c6c9d2ef7\out/private.rs:
+
+# env-dep:OUT_DIR=E:\\projects\\offline-edu-ai-agent\\src-tauri\\target\\debug\\build\\serde-a75bef8c6c9d2ef7\\out
